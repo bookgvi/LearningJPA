@@ -1,0 +1,9 @@
+<persistence>
+    <persistence-unit name="EmployeeService"
+                      transaction-type="RESOURCE_LOCAL">
+        <class>localhost.models.Employee</class>
+        <properties>
+            ...
+        </properties>
+    </persistence-unit>
+</persistence>
