@@ -1,6 +1,11 @@
 package localhost.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Employee {
+  @Id
   protected long id;
   protected String name;
   protected int salary;
