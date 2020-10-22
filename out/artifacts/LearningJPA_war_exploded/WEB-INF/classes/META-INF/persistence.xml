@@ -1,8 +1,0 @@
-<persistence>
-    <persistence-unit name="EmployeeServiceEE">
-        <class>localhost.models.Employee</class>
-        <properties>
-            ...
-        </properties>
-    </persistence-unit>
-</persistence>
