@@ -4,6 +4,22 @@ import javax.persistence.*;
 
 @Entity
 public class Employee {
+  /**
+   * entityId = START_WITH - allocationSize + INCREMENT_BY
+   *
+   * @SequenceGenerator(
+   *     name="email-seq-gen",
+   *     sequenceName="EMAIL_SEQ_GEN",
+   *     allocationSize=500
+   * ) // initialValue=1 (default)
+   *
+   * CREATE SEQUENCE EMAIL_SEQ_GEN START WITH 1 INCREMENT BY 500;
+   *
+   *  produces
+   *
+   * entityId = 1 - 500 + 1 = -500 // EclipseLink error
+   *
+   */
   @Id
   @SequenceGenerator(
     name = "employee_id",
