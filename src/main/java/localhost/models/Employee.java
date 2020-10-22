@@ -1,19 +1,24 @@
 package localhost.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Employee {
   @Id
-  protected long id;
-  protected String name;
-  protected int salary;
+  @SequenceGenerator(
+    name = "employee_id",
+    sequenceName = "employee_id_seq",
+    allocationSize = 1
+  )
+  @GeneratedValue(generator ="employee_id", strategy = GenerationType.SEQUENCE)
+  private int id;
+  private String name;
+  private int salary;
 
   public Employee() {
   }
 
-  public Employee(long id) {
+  public Employee(int id) {
     this.id = id;
   }
 

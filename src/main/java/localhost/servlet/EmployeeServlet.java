@@ -33,7 +33,7 @@ public class EmployeeServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     BufferedReader buffer = req.getReader();
     JsonObject jsonObject = JsonParser.parseReader(buffer).getAsJsonObject();
-    String name = jsonObject.get("name").toString();
+    String name = jsonObject.get("name").getAsString();
     int salary = jsonObject.get("salary").getAsInt();
     Employee newEmployee = empService.createOne(name, salary);
     resp.getWriter().printf("New Employee: %s%n", newEmployee);
