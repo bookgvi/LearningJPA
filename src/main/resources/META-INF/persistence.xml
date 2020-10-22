@@ -1,0 +1,5 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence">
+    <persistence-unit name="EmployeeServiceEE" transaction-type="JTA">
+        <jta-data-source>jdbc/learningjpa</jta-data-source>
+    </persistence-unit>
+</persistence>
