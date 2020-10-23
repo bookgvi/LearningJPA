@@ -16,7 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Writer;
 
-@WebServlet(name = "employee servlet", urlPatterns = { "/employee", "/employee/*" })
+//@WebServlet(name = "employee servlet", urlPatterns = { "/employee", "/employee/*" })
 public class EmployeeServlet extends HttpServlet {
   @EJB
   EmployeeWEB empService;
