@@ -1,6 +1,8 @@
 package localhost.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Employee {
@@ -28,7 +30,9 @@ public class Employee {
   )
   @GeneratedValue(generator ="employee_id", strategy = GenerationType.SEQUENCE)
   private long id;
+  @NotNull
   private String name;
+  @Min(0)
   private int salary;
 
   public Employee() {

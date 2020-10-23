@@ -33,11 +33,17 @@ public class Employee {
   public Response createOne(
     InputStream payload
   ) {
-    BufferedReader buffer = new BufferedReader(new InputStreamReader(payload));
-    JsonObject jsonPayload = JsonParser.parseReader(buffer).getAsJsonObject();
-    String name = jsonPayload.get("name").getAsString();
-    int salary = jsonPayload.get("salary").getAsInt();
+    String name = null;
+    int salary = 0;
+    try {
+      BufferedReader buffer = new BufferedReader(new InputStreamReader(payload));
+      JsonObject jsonPayload = JsonParser.parseReader(buffer).getAsJsonObject();
+      name = jsonPayload.get("name").getAsString();
+      salary = jsonPayload.get("salary").getAsInt();
+    } catch (Exception ignored) {
+    }
     localhost.models.Employee employee = emp.createOne(name, salary);
+
     if (employee != null) return Response.status(201).entity(employee).build();
     return Response.notModified().build();
   }
