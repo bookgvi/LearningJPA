@@ -13,7 +13,7 @@ public class EmployeeWEB {
   @PersistenceContext(unitName = "EmployeeServiceEE")
   EntityManager em;
 
-  public Employee find(long id) {
+  public Employee findOne(long id) {
     return em.find(Employee.class, id);
   }
 

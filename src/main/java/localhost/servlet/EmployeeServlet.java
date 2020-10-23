@@ -16,7 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Writer;
 
-@WebServlet(name = "employee servlet", urlPatterns = "/employee")
+@WebServlet(name = "employee servlet", urlPatterns = { "/employee", "/employee/*" })
 public class EmployeeServlet extends HttpServlet {
   @EJB
   EmployeeWEB empService;
@@ -25,8 +25,13 @@ public class EmployeeServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     Writer w = resp.getWriter();
     Gson gson = new Gson();
-    String payload = gson.toJson(empService.findAll());
-    w.write(payload);
+    String id = req.getPathInfo();
+    if(id == null) {
+      String payload = gson.toJson(empService.findAll());
+      w.write(payload);
+    } else {
+      w.write(id);
+    }
   }
 
   @Override
