@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 @Path("/employee")
-public class Employee {
+public class ResourceEmployee {
 
   @EJB
   EmployeeWEB emp;
