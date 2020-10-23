@@ -27,14 +27,14 @@ public class Employee {
     allocationSize = 1
   )
   @GeneratedValue(generator ="employee_id", strategy = GenerationType.SEQUENCE)
-  private int id;
+  private long id;
   private String name;
   private int salary;
 
   public Employee() {
   }
 
-  public Employee(int id) {
+  public Employee(long id) {
     this.id = id;
   }
 
