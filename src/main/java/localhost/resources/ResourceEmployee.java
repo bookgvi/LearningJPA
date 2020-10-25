@@ -37,6 +37,10 @@ public class ResourceEmployee {
     int salary = 0;
     try {
       BufferedReader buffer = new BufferedReader(new InputStreamReader(payload));
+      String result = buffer.lines().map((String str) -> {
+        System.out.print(str);
+        return str;
+      }).toString();
       JsonObject jsonPayload = JsonParser.parseReader(buffer).getAsJsonObject();
       name = jsonPayload.get("name").getAsString();
       salary = jsonPayload.get("salary").getAsInt();
