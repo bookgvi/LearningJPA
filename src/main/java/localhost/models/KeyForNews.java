@@ -1,6 +1,5 @@
 package localhost.models;
 
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 public class KeyForNews implements Serializable {

@@ -25,6 +25,14 @@ public class News {
 
   public News() {}
 
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public int getId() {
+    return this.id;
+  }
+
   public void setLang(String lang) {
     this.lang = lang;
   }
