@@ -1,23 +1,37 @@
 package localhost.models;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import java.util.Date;
+import javax.persistence.*;
 
 @Entity
+@IdClass(KeyForNews.class)
+@Access(value = AccessType.PROPERTY)
 public class News {
-  private KeyForNews id;
-  private String title;
-  private Date date;
+  @Id
+  @Access(value = AccessType.FIELD)
+  @SequenceGenerator(
+    name = "news_id",
+    sequenceName = "news_id_seq",
+    allocationSize = 1
+  )
+  @GeneratedValue(
+    strategy = GenerationType.SEQUENCE,
+    generator = "news_id"
+  )
+  private int id;
+  private String lang;
 
-  public void setId(KeyForNews id) {
-    this.id = id;
+  private String title;
+  private int dateStamp;
+
+  public News() {}
+
+  public void setLang(String lang) {
+    this.lang = lang;
   }
 
-  @EmbeddedId
-  public KeyForNews getId() {
-    return this.id;
+  @Id
+  public String getLang() {
+    return this.lang;
   }
 
   public void setTitle(String title) {
@@ -29,13 +43,17 @@ public class News {
     return this.title;
   }
 
-  public void setDate(Date date) {
-    this.date = date;
+  public void setDate(int dateStamp) {
+    this.dateStamp = dateStamp;
   }
 
   @Column
-  public Date getDate() {
-    return this.date;
+  public int getDate() {
+    return this.dateStamp;
   }
 
+  @Override
+  public String toString() {
+    return this.id + ", " + this.lang + ", " + ", " + this.title + ", " + this.dateStamp;
+  }
 }

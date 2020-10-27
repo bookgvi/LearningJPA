@@ -3,7 +3,6 @@ package localhost.models;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-@Embeddable
 public class KeyForNews implements Serializable {
   private int id;
   private String lang;
@@ -12,7 +11,9 @@ public class KeyForNews implements Serializable {
     this.id = id;
     this.lang = lang;
   }
-
+  public KeyForNews(String lang) {
+    this.lang = lang;
+  }
   public KeyForNews() {
   }
 
@@ -30,4 +31,10 @@ public class KeyForNews implements Serializable {
   public void setLang(String lang) {
     this.lang = lang;
   }
+
+  @Override
+  public String toString() {
+    return this.id + ", " + this.lang;
+  }
+
 }
