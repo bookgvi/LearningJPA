@@ -7,26 +7,26 @@ import java.util.Date;
 
 @Entity
 public class News {
-  private Key id;
-  private Key lang;
+  private KeyForNews id;
+  private KeyForNews lang;
   private String title;
   private Date date;
 
-  public void setId(Key id) {
+  public void setId(KeyForNews id) {
     this.id = id;
   }
 
   @EmbeddedId
-  public Key getId() {
+  public KeyForNews getId() {
     return this.id;
   }
 
-  public void setLang(Key lang) {
+  public void setLang(KeyForNews lang) {
     this.lang = lang;
   }
 
   @EmbeddedId
-  public Key getLang() {
+  public KeyForNews getLang() {
     return this.lang;
   }
 

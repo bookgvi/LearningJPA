@@ -4,16 +4,16 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
-public class Key implements Serializable {
+public class KeyForNews implements Serializable {
   private int id;
   private String lang;
 
-  public Key(int id, String lang) {
+  public KeyForNews(int id, String lang) {
     this.id = id;
     this.lang = lang;
   }
 
-  public Key() {
+  public KeyForNews() {
   }
 
   public int getId() {
