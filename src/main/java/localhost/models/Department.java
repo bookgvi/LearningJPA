@@ -34,13 +34,14 @@ public class Department {
     this.description = description;
   }
 
-//  @OneToMany(mappedBy = "department")
-//  public Collection<Employee> getEmployeesID() {
-//    return employeesID;
-//  }
-//  public void setEmployeesID(Collection<Employee> employeesID) {
-//    this.employeesID = employeesID;
-//  }
+  @OneToMany
+  @JoinColumn(name = "dep_id")
+  public Collection<Employee> getEmployeesID() {
+    return employeesID;
+  }
+  public void setEmployeesID(Collection<Employee> employeesID) {
+    this.employeesID = employeesID;
+  }
 
   @Override
   public String toString() {

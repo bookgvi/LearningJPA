@@ -34,9 +34,13 @@ public class Employee {
   @Min(0)
   private int salary;
 
-  @ManyToOne
-  @JoinColumn(name = "dep_id")
-  private Department department;
+  @NotNull
+  @Column(name = "dep_id")
+  private int depId;
+
+//  @ManyToOne
+//  @JoinColumn(name = "dep_id")
+//  private Department department;
 
   public Employee() {
   }
@@ -65,12 +69,20 @@ public class Employee {
     return this.salary;
   }
 
-  public Department getDepartment() {
-    return this.department;
+  public int getDepId() {
+    return this.depId;
   }
-  public void setDepartment(Department department) {
-    this.department = department;
+
+  public void setDepId(int id) {
+    this.depId = id;
   }
+
+//  public Department getDepartment() {
+//    return this.department;
+//  }
+//  public void setDepartment(Department department) {
+//    this.department = department;
+//  }
 
   @Override
   public String toString() {
