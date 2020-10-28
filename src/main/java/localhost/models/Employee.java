@@ -33,6 +33,9 @@ public class Employee {
   private String name;
   @Min(0)
   private int salary;
+
+  @ManyToOne
+  @JoinColumn(name = "dep_id")
   private Department department;
 
   public Employee() {
@@ -62,9 +65,6 @@ public class Employee {
     return this.salary;
   }
 
-  @Access(AccessType.PROPERTY)
-  @ManyToOne
-  @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
   public Department getDepartment() {
     return this.department;
   }
