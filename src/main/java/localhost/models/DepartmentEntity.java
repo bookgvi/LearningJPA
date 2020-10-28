@@ -1,6 +1,7 @@
 package localhost.models;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -9,6 +10,7 @@ public class DepartmentEntity {
   private Integer id;
   private String name;
   private String description;
+  private Collection<EmployeeEntity> employeesById;
 
   @Id
   @Column(name = "id")
@@ -53,5 +55,14 @@ public class DepartmentEntity {
   @Override
   public int hashCode() {
     return Objects.hash(id, name, description);
+  }
+
+  @OneToMany(mappedBy = "departmentByDepId")
+  public Collection<EmployeeEntity> getEmployeesById() {
+    return employeesById;
+  }
+
+  public void setEmployeesById(Collection<EmployeeEntity> employeesById) {
+    this.employeesById = employeesById;
   }
 }

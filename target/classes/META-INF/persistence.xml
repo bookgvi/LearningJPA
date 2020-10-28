@@ -1,5 +1,17 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="EmployeeServiceEE" transaction-type="JTA">
         <jta-data-source>jdbc/learningjpa</jta-data-source>
+        <class>localhost.models.DepartmentEntity</class>
+        <class>localhost.models.EmployeeEntity</class>
+        <properties>
+            <property name="toplink.jdbc.url" value="jdbc:postgresql://localhost:5432/learningjpa"/>
+            <property name="toplink.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/learningjpa"/>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/learningjpa"/>
+            <property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver"/>
+            <property name="eclipselink.jdbc.url" value="jdbc:postgresql://localhost:5432/learningjpa"/>
+            <property name="eclipselink.jdbc.driver" value="org.postgresql.Driver"/>
+        </properties>
     </persistence-unit>
 </persistence>

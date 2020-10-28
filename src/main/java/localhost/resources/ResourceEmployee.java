@@ -44,6 +44,7 @@ public class ResourceEmployee {
       JsonObject jsonPayload = JsonParser.parseReader(buffer).getAsJsonObject();
       name = jsonPayload.get("name").getAsString();
       salary = jsonPayload.get("salary").getAsInt();
+      salary = jsonPayload.get("salary").getAsInt();
     } catch (Exception ignored) {
     }
     localhost.models.Employee employee = emp.createOne(name, salary);
