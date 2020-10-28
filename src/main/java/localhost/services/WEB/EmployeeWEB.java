@@ -3,6 +3,7 @@ package localhost.services.WEB;
 import localhost.models.Department;
 import localhost.models.Employee;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,13 +15,16 @@ public class EmployeeWEB {
   @PersistenceContext(unitName = "EmployeeServiceEE")
   EntityManager em;
 
+  @EJB
+  DepartmentWEB departmentWEB;
+
   public Employee findOne(long id) {
     return em.find(Employee.class, id);
   }
 
   public Employee createOne(String name, int salary, int depId) {
     Employee newEmp = null;
-    Department department = em.find(Department.class, depId);
+    Department department = this.departmentWEB.findOne(depId); // em.find(Department.class, depId);
     if (department != null) {
       newEmp = new Employee();
       newEmp.setName(name);
