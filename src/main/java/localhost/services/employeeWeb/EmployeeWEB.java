@@ -19,17 +19,16 @@ public class EmployeeWEB {
   }
 
   public Employee createOne(String name, int salary, int depId) {
-    Employee newEmp = new Employee();
+    Employee newEmp = null;
     Department department = em.find(Department.class, depId);
     if (department != null) {
-      System.out.printf("Department: %s", department.toString());
+      newEmp = new Employee();
       newEmp.setName(name);
       newEmp.setSalary(salary);
       newEmp.setDepartment(department);
       em.persist(newEmp);
-      return newEmp;
     }
-    return null;
+    return newEmp;
   }
 
   public List<Employee> findAll() {

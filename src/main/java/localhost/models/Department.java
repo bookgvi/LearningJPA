@@ -13,6 +13,13 @@ public class Department {
   private String description;
   private Collection<Employee> employeesID;
 
+  public int getId() {
+    return this.id;
+  }
+  public void setId(int id) {
+    this.id = id;
+  }
+
   public String getName() {
     return this.name;
   }
@@ -27,13 +34,13 @@ public class Department {
     this.description = description;
   }
 
-  @OneToMany(mappedBy = "department")
-  public Collection<Employee> getEmployeesID() {
-    return employeesID;
-  }
-  public void setEmployeesID(Collection<Employee> employeesID) {
-    this.employeesID = employeesID;
-  }
+//  @OneToMany(mappedBy = "department")
+//  public Collection<Employee> getEmployeesID() {
+//    return employeesID;
+//  }
+//  public void setEmployeesID(Collection<Employee> employeesID) {
+//    this.employeesID = employeesID;
+//  }
 
   @Override
   public String toString() {
