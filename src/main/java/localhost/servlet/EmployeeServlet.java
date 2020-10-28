@@ -4,7 +4,7 @@
 //import com.google.gson.JsonObject;
 //import com.google.gson.JsonParser;
 //import localhost.models.Employee;
-//import localhost.services.employeeWeb.EmployeeWEB;
+//import localhost.services.WEB.EmployeeWEB;
 //
 //import javax.ejb.EJB;
 //import javax.servlet.ServletException;

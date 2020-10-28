@@ -3,7 +3,7 @@ package localhost.resources;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import localhost.models.News;
-import localhost.services.newsService.NewsWEB;
+import localhost.services.WEB.NewsWEB;
 
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;

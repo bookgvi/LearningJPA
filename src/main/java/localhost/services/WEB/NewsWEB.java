@@ -1,4 +1,4 @@
-package localhost.services.newsService;
+package localhost.services.WEB;
 
 import localhost.models.News;
 

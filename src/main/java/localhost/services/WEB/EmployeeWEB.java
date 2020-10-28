@@ -1,4 +1,4 @@
-package localhost.services.employeeWeb;
+package localhost.services.WEB;
 
 import localhost.models.Department;
 import localhost.models.Employee;

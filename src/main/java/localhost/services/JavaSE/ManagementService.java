@@ -1,8 +1,8 @@
-package localhost.services.managementService;
+package localhost.services.JavaSE;
 
 import localhost.models.Employee;
 import localhost.services.EntityServices;
-import localhost.services.employeeService.EmployeeService;
+import localhost.services.JavaSE.EmployeeService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
