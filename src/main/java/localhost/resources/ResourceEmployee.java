@@ -35,6 +35,7 @@ public class ResourceEmployee {
   ) {
     String name = null;
     int salary = 0;
+    int department = 0;
     try {
       BufferedReader buffer = new BufferedReader(new InputStreamReader(payload));
       String result = buffer.lines().map((String str) -> {
@@ -44,12 +45,12 @@ public class ResourceEmployee {
       JsonObject jsonPayload = JsonParser.parseReader(buffer).getAsJsonObject();
       name = jsonPayload.get("name").getAsString();
       salary = jsonPayload.get("salary").getAsInt();
-      salary = jsonPayload.get("salary").getAsInt();
+      department = jsonPayload.get("department").getAsInt();
     } catch (Exception ignored) {
     }
-    localhost.models.Employee employee = emp.createOne(name, salary);
+    localhost.models.Employee employee = emp.createOne(name, salary, department);
 
     if (employee != null) return Response.status(201).entity(employee).build();
-    return Response.notModified().build();
+    return Response.status(400).build(); // Bad request
   }
 }

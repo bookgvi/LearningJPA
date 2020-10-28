@@ -57,7 +57,7 @@ public class EmployeeEntity {
   }
 
   @ManyToOne
-  @JoinColumn(name = "dep_id", referencedColumnName = "id", nullable = false)
+  @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
   public DepartmentEntity getDepartmentByDepId() {
     return departmentByDepId;
   }

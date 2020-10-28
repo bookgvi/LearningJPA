@@ -33,6 +33,7 @@ public class Employee {
   private String name;
   @Min(0)
   private int salary;
+  private Department department;
 
   public Employee() {
   }
@@ -59,6 +60,16 @@ public class Employee {
 
   public int getSalary() {
     return this.salary;
+  }
+
+  @Access(AccessType.PROPERTY)
+  @ManyToOne
+  @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
+  public Department getDepartment() {
+    return this.department;
+  }
+  public void setDepartment(Department department) {
+    this.department = department;
   }
 
   @Override

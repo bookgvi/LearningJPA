@@ -1,5 +1,6 @@
 package localhost.services.employeeWeb;
 
+import localhost.models.Department;
 import localhost.models.Employee;
 
 import javax.ejb.Stateless;
@@ -17,12 +18,18 @@ public class EmployeeWEB {
     return em.find(Employee.class, id);
   }
 
-  public Employee createOne(String name, int salary) {
+  public Employee createOne(String name, int salary, int depId) {
     Employee newEmp = new Employee();
-    newEmp.setName(name);
-    newEmp.setSalary(salary);
-    em.persist(newEmp);
-    return newEmp;
+    Department department = em.find(Department.class, depId);
+    if (department != null) {
+      System.out.printf("Department: %s", department.toString());
+      newEmp.setName(name);
+      newEmp.setSalary(salary);
+      newEmp.setDepartment(department);
+      em.persist(newEmp);
+      return newEmp;
+    }
+    return null;
   }
 
   public List<Employee> findAll() {
