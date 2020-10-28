@@ -1,6 +1,7 @@
 package localhost.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity
@@ -8,10 +9,13 @@ import java.util.Collection;
 public class Department {
   @Id
   @Access(AccessType.FIELD)
+  @NotNull
+  @SequenceGenerator(name = "id_gen", sequenceName = "department_id_seq", allocationSize = 1)
+  @GeneratedValue(generator = "id_gen", strategy = GenerationType.SEQUENCE)
   private int id;
   private String name;
   private String description;
-  private Collection<Employee> employeesID;
+  private Collection<Employee> employees;
 
   public int getId() {
     return this.id;
@@ -36,11 +40,11 @@ public class Department {
 
   @OneToMany
   @JoinColumn(name = "dep_id")
-  public Collection<Employee> getEmployeesID() {
-    return employeesID;
+  public Collection<Employee> getEmployees() {
+    return employees;
   }
-  public void setEmployeesID(Collection<Employee> employeesID) {
-    this.employeesID = employeesID;
+  public void setEmployees(Collection<Employee> employeesID) {
+    this.employees = employeesID;
   }
 
   @Override

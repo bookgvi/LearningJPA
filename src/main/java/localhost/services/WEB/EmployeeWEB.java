@@ -39,4 +39,17 @@ public class EmployeeWEB {
     TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e", Employee.class);
     return query.getResultList();
   }
+
+  public List<Employee> findByDepId(int depId) {
+    TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e WHERE e.depId = :depId", Employee.class);
+    query.setParameter("depId", depId);
+    return query.getResultList();
+  }
+
+  public Employee deleteOne(long id) {
+    Employee employee = this.findOne(id);
+    if (employee == null) return null;
+    em.remove(employee);
+    return employee;
+  }
 }

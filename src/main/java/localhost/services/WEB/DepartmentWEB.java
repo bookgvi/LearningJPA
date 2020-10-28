@@ -1,8 +1,10 @@
 package localhost.services.WEB;
 
 import localhost.models.Department;
+import localhost.models.Employee;
 import org.hibernate.loader.custom.CustomQuery;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,6 +15,9 @@ import java.util.List;
 public class DepartmentWEB {
   @PersistenceContext
   EntityManager em;
+
+  @EJB
+  EmployeeWEB employeeWEB;
 
   public Department findOne(int id) {
     return em.find(Department.class, id);
@@ -41,10 +46,19 @@ public class DepartmentWEB {
     return department;
   }
 
-  public void deleteOne(int id) {
+  public Department deleteOne(int id) {
     Department department = this.findOne(id);
     if (department != null) {
+      List<Employee> employees = employeeWEB.findByDepId(id);
+      try {
+        for (Employee employee : employees) {
+          employeeWEB.deleteOne(employee.getId());
+        }
       em.remove(department);
+      } catch (Exception ignored) {
+      }
+      return department;
     }
+    return null;
   }
 }
