@@ -30,6 +30,7 @@ public class EmployeeWEB {
       newEmp.setName(name);
       newEmp.setSalary(salary);
       newEmp.setDepId(department.getId()); // newEmp.setDepId(depId);
+      departmentWEB.addEmployee(depId, newEmp);
       em.persist(newEmp);
     }
     return newEmp;

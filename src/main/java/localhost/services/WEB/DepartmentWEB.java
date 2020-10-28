@@ -41,7 +41,20 @@ public class DepartmentWEB {
     if (department != null) {
       department.setName(name);
       department.setDescription(description);
-//      em.persist(department);
+    }
+    return department;
+  }
+  public Department addEmployees(int id, List<Employee> employees) {
+    Department department = this.findOne(id);
+    if (department != null) {
+      department.setEmployees(employees);
+    }
+    return department;
+  }
+  public Department addEmployee(int id, Employee employee) {
+    Department department = this.findOne(id);
+    if (department != null) {
+      department.addEmployee(employee);
     }
     return department;
   }

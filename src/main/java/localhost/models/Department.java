@@ -47,6 +47,13 @@ public class Department {
     this.employees = employeesID;
   }
 
+  public void addEmployee(Employee employee) {
+    this.employees.add(employee);
+  }
+  public void deleteEmployee(Employee employee) {
+    this.employees.remove(employee);
+  }
+
   @Override
   public String toString() {
     return "Employee: \n" +
