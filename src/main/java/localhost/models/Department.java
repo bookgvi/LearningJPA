@@ -5,18 +5,21 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity
-@Access(AccessType.PROPERTY)
 public class Department {
   @Id
-  @Access(AccessType.FIELD)
   @NotNull
   @SequenceGenerator(name = "id_gen", sequenceName = "department_id_seq", allocationSize = 1)
   @GeneratedValue(generator = "id_gen", strategy = GenerationType.SEQUENCE)
   private int id;
   private String name;
   private String description;
+
+  @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
   private Collection<Employee> employees;
 
+  /**
+   * Getters & Setters
+   */
   public int getId() {
     return this.id;
   }
@@ -38,8 +41,6 @@ public class Department {
     this.description = description;
   }
 
-  @OneToMany
-  @JoinColumn(name = "dep_id")
   public Collection<Employee> getEmployees() {
     return employees;
   }
@@ -56,10 +57,11 @@ public class Department {
 
   @Override
   public String toString() {
-    return "Employee: \n" +
-      "id: " + this.id +
+    return
+      "\n id: " + this.id +
       "\n name: " + this.name +
-      "\n description: " + this.description + "\n";
+      "\n description: " + this.description +
+      "\n employees: [" + this.employees.stream().map(Employee::getId) + "]\n";
   }
 
 }

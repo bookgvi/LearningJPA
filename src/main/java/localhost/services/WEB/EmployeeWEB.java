@@ -29,7 +29,8 @@ public class EmployeeWEB {
       newEmp = new Employee();
       newEmp.setName(name);
       newEmp.setSalary(salary);
-      newEmp.setDepId(department.getId()); // newEmp.setDepId(depId);
+//      newEmp.setDepId(department.getId()); // newEmp.setDepId(depId);
+      newEmp.setDepartment(department);
       departmentWEB.addEmployee(depId, newEmp);
       em.persist(newEmp);
     }
@@ -42,7 +43,7 @@ public class EmployeeWEB {
   }
 
   public List<Employee> findByDepId(int depId) {
-    TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e WHERE e.depId = :depId", Employee.class);
+    TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e WHERE e.department = :depId", Employee.class);
     query.setParameter("depId", depId);
     return query.getResultList();
   }

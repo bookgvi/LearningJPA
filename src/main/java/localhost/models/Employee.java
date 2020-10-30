@@ -35,7 +35,11 @@ public class Employee {
   private int salary;
 
   @NotNull
-  @Column(name = "dep_id")
+  @ManyToOne
+  @JoinColumn(name = "dep_id")
+  private Department department;
+
+  @Transient
   private int depId;
 
 //  @ManyToOne
@@ -77,19 +81,20 @@ public class Employee {
     this.depId = id;
   }
 
-//  public Department getDepartment() {
-//    return this.department;
-//  }
-//  public void setDepartment(Department department) {
-//    this.department = department;
-//  }
+  public Department getDepartment() {
+    return this.department;
+  }
+  public void setDepartment(Department department) {
+    this.department = department;
+  }
 
   @Override
   public String toString() {
-    return "Employee: \n" +
-      "id: " + this.id +
+    return
+      "\n id: " + this.id +
       "\n name: " + this.name +
-      "\n salary: " + this.salary + "\n";
+      "\n salary: " + this.salary +
+      "\n department: {" + this.department.toString() + "} \n";
   }
 
   @Override

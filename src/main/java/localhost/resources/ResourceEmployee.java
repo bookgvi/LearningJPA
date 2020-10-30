@@ -29,7 +29,6 @@ public class ResourceEmployee {
   }
 
   @POST
-  @Consumes("application/json")
   public Response createOne(
     InputStream payload
   ) {
@@ -38,10 +37,6 @@ public class ResourceEmployee {
     int department = 0;
     try {
       BufferedReader buffer = new BufferedReader(new InputStreamReader(payload));
-      String result = buffer.lines().map((String str) -> {
-        System.out.print(str);
-        return str;
-      }).toString();
       JsonObject jsonPayload = JsonParser.parseReader(buffer).getAsJsonObject();
       name = jsonPayload.get("name").getAsString();
       salary = jsonPayload.get("salary").getAsInt();
@@ -50,7 +45,10 @@ public class ResourceEmployee {
     }
     localhost.models.Employee employee = emp.createOne(name, salary, department);
 
-    if (employee != null) return Response.status(201).entity(employee).build();
+    if (employee != null) {
+      System.out.print(employee.toString());
+      return Response.status(201).build();
+    }
     return Response.status(400).build(); // Bad request
   }
 }
