@@ -1,8 +1,11 @@
 package localhost.models;
 
+import com.google.gson.Gson;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 import java.util.Objects;
 
 @Entity
@@ -40,7 +43,7 @@ public class Employee {
   private Department department;
 
   @Transient
-  private int depId;
+  private transient int depId;
 
 //  @ManyToOne
 //  @JoinColumn(name = "dep_id")
@@ -86,6 +89,22 @@ public class Employee {
   }
   public void setDepartment(Department department) {
     this.department = department;
+  }
+
+  public HashMap<String, Object> getMapForJson() {
+    HashMap<String, Object> employeeMap = new HashMap<>();
+
+    employeeMap.put("id", this.id);
+    employeeMap.put("name", this.name);
+    employeeMap.put("salary", this.salary);
+    employeeMap.put("department", this.department.getMapForJson());
+    return employeeMap;
+  }
+
+  public String toJson() {
+    Gson gson = new Gson();
+    HashMap<String, Object> employeeMap = this.getMapForJson();
+    return gson.toJson(employeeMap);
   }
 
   @Override

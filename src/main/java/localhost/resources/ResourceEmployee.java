@@ -2,6 +2,7 @@ package localhost.resources;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import localhost.models.Employee;
 import localhost.services.WEB.EmployeeWEB;
 
 import javax.ejb.EJB;
@@ -10,6 +11,9 @@ import javax.ws.rs.core.Response;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Path("/employee")
 public class ResourceEmployee {
@@ -18,17 +22,29 @@ public class ResourceEmployee {
   EmployeeWEB emp;
 
   @GET
+  @Consumes("application/json")
   public Response getAll() {
-    return Response.ok(emp.findAll()).build();
+    List<Employee> employeeList = emp.findAll();
+    ArrayList<HashMap<String, Object>> enployeeArr = new ArrayList<>();
+    for(Employee employee: employeeList) {
+      enployeeArr.add(employee.getMapForJson());
+    }
+    return Response.ok().entity(enployeeArr).build();
   }
 
   @GET
   @Path("{id}")
+  @Consumes("application/json")
   public Response getOne(@PathParam("id") int id) {
-    return Response.ok(emp.findOne(id)).build();
+    Employee employee = emp.findOne(id);
+    if (employee != null) {
+      return Response.ok().entity(employee.getMapForJson()).build();
+    }
+    return Response.status(400).build();
   }
 
   @POST
+  @Consumes("application/json")
   public Response createOne(
     InputStream payload
   ) {
@@ -46,8 +62,7 @@ public class ResourceEmployee {
     localhost.models.Employee employee = emp.createOne(name, salary, department);
 
     if (employee != null) {
-      System.out.print(employee.toString());
-      return Response.status(201).build();
+      return Response.status(201).entity(employee.getMapForJson()).build();
     }
     return Response.status(400).build(); // Bad request
   }

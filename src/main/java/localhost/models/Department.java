@@ -1,8 +1,11 @@
 package localhost.models;
 
+import com.google.gson.Gson;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashMap;
 
 @Entity
 public class Department {
@@ -53,6 +56,19 @@ public class Department {
   }
   public void deleteEmployee(Employee employee) {
     this.employees.remove(employee);
+  }
+
+  public HashMap<String, Object> getMapForJson() {
+    HashMap<String, Object> departmentMap = new HashMap<>();
+    departmentMap.put("id", this.id);
+    departmentMap.put("name", this.name);
+    departmentMap.put("description", this.description);
+    return departmentMap;
+  }
+  public String toJson() {
+    HashMap<String, Object> departmentMap = this.getMapForJson();
+    Gson gson = new Gson();
+    return gson.toJson(departmentMap);
   }
 
   @Override
