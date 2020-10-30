@@ -62,7 +62,7 @@ public class DepartmentWEB {
   public Department deleteOne(int id) {
     Department department = this.findOne(id);
     if (department != null) {
-      List<Employee> employees = employeeWEB.findByDepId(id);
+      List<Employee> employees = employeeWEB.findByDepartment(department);
       try {
         for (Employee employee : employees) {
           employeeWEB.deleteOne(employee.getId());

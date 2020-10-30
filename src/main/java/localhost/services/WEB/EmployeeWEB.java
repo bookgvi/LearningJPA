@@ -42,9 +42,9 @@ public class EmployeeWEB {
     return query.getResultList();
   }
 
-  public List<Employee> findByDepId(int depId) {
-    TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e WHERE e.department = :depId", Employee.class);
-    query.setParameter("depId", depId);
+  public List<Employee> findByDepartment(Department dep) {
+    TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e WHERE e.department = :dep", Employee.class);
+    query.setParameter("dep", dep);
     return query.getResultList();
   }
 
