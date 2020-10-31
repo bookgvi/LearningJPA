@@ -17,7 +17,7 @@ public class Department {
   private String name;
   private String description;
 
-  @OneToMany(mappedBy = "department")
+  @OneToMany(mappedBy = "department", orphanRemoval = true)
   private Collection<Employee> employees;
 
   /**

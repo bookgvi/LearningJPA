@@ -62,14 +62,15 @@ public class DepartmentWEB {
   public Department deleteOne(int id) {
     Department department = this.findOne(id);
     if (department != null) {
-      List<Employee> employees = employeeWEB.findByDepartment(department);
-      try {
-        for (Employee employee : employees) {
-          employeeWEB.deleteOne(employee.getId());
-        }
+      // если не использовать orphanRemoval = true в анотации @OneToMany - нужно раскоментить код для "ручного кскадного удаления"
+//      List<Employee> employees = employeeWEB.findByDepartment(department);
+//      try {
+//        for (Employee employee : employees) {
+//          employeeWEB.deleteOne(employee.getId());
+//        }
       em.remove(department);
-      } catch (Exception ignored) {
-      }
+//      } catch (Exception ignored) {
+//      }
       return department;
     }
     return null;
