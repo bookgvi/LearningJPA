@@ -5,6 +5,8 @@ import localhost.models.News;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Stateless
 public class NewsWEB {
@@ -18,5 +20,10 @@ public class NewsWEB {
     news.setLang(lang);
     em.persist(news);
     return news;
+  }
+
+  public List<News> findAll() {
+    TypedQuery<News> query = em.createQuery("SELECT n FROM News n", News.class);
+    return query.getResultList();
   }
 }
