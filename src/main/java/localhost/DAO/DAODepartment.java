@@ -1,8 +1,7 @@
-package localhost.services.WEB;
+package localhost.DAO;
 
 import localhost.models.Department;
 import localhost.models.Employee;
-import org.hibernate.loader.custom.CustomQuery;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -12,12 +11,12 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Stateless
-public class DepartmentWEB {
+public class DAODepartment {
   @PersistenceContext
   EntityManager em;
 
   @EJB
-  EmployeeWEB employeeWEB;
+  DAOEmployee DAOEmployee;
 
   public Department findOne(int id) {
     return em.find(Department.class, id);

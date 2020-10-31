@@ -1,4 +1,4 @@
-package localhost.services.WEB;
+package localhost.DAO;
 
 import localhost.models.Department;
 import localhost.models.Employee;
@@ -11,12 +11,12 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Stateless
-public class EmployeeWEB {
+public class DAOEmployee {
   @PersistenceContext(unitName = "EmployeeServiceEE")
   EntityManager em;
 
   @EJB
-  DepartmentWEB departmentWEB;
+  DAODepartment DAODepartment;
 
   public Employee findOne(long id) {
     return em.find(Employee.class, id);
@@ -24,14 +24,14 @@ public class EmployeeWEB {
 
   public Employee createOne(String name, int salary, int depId) {
     Employee newEmp = null;
-    Department department = this.departmentWEB.findOne(depId); // em.find(Department.class, depId);
+    Department department = this.DAODepartment.findOne(depId); // em.find(Department.class, depId);
     if (department != null) {
       newEmp = new Employee();
       newEmp.setName(name);
       newEmp.setSalary(salary);
 //      newEmp.setDepId(department.getId()); // newEmp.setDepId(depId);
       newEmp.setDepartment(department);
-      departmentWEB.addEmployee(depId, newEmp);
+      DAODepartment.addEmployee(depId, newEmp);
       em.persist(newEmp);
     }
     return newEmp;
@@ -43,7 +43,10 @@ public class EmployeeWEB {
   }
 
   public List<Employee> findByDepartment(Department dep) {
-    TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e WHERE e.department = :dep", Employee.class);
+    TypedQuery<Employee> query = em.createQuery(
+      "SELECT e FROM Employee e WHERE e.department = :dep",
+      Employee.class
+    );
     query.setParameter("dep", dep);
     return query.getResultList();
   }

@@ -3,7 +3,7 @@ package localhost.resources;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import localhost.models.News;
-import localhost.services.WEB.NewsWEB;
+import localhost.DAO.DAONews;
 
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
@@ -19,12 +19,12 @@ import java.util.List;
 @Path("/news")
 public class ResourceNews {
   @EJB
-  NewsWEB newsWEB;
+  DAONews DAONews;
 
   @GET
   @Consumes("application/json")
   public Response getAll() {
-    List<News> newsList = newsWEB.findAll();
+    List<News> newsList = DAONews.findAll();
     if (newsList.size() > 0) return Response.ok().entity(newsList).build();
     return Response.status(400).build();
   }
@@ -38,7 +38,7 @@ public class ResourceNews {
     int dateStamp = jsonObject.get("date").getAsInt();
     String lang = jsonObject.get("lang").getAsString();
 
-    News news = newsWEB.createOne(title, dateStamp, lang);
+    News news = DAONews.createOne(title, dateStamp, lang);
     return Response.status(Response.Status.CREATED).entity(news).build();
   }
 

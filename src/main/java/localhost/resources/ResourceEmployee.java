@@ -3,7 +3,7 @@ package localhost.resources;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import localhost.models.Employee;
-import localhost.services.WEB.EmployeeWEB;
+import localhost.DAO.DAOEmployee;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -19,7 +19,7 @@ import java.util.List;
 public class ResourceEmployee {
 
   @EJB
-  EmployeeWEB emp;
+  DAOEmployee emp;
 
   @GET
   @Consumes("application/json")

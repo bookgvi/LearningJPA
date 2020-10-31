@@ -1,4 +1,4 @@
-package localhost.services.WEB;
+package localhost.DAO;
 
 import localhost.models.News;
 
@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Stateless
-public class NewsWEB {
+public class DAONews {
   @PersistenceContext(unitName = "EmployeeServiceEE")
   EntityManager em;
 
