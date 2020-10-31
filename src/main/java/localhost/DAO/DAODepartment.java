@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.DELETE;
 import java.util.List;
 
 @Stateless
@@ -62,14 +63,10 @@ public class DAODepartment {
     Department department = this.findOne(id);
     if (department != null) {
       // если не использовать orphanRemoval = true в анотации @OneToMany - нужно раскоментить код для "ручного кскадного удаления"
-//      List<Employee> employees = employeeWEB.findByDepartment(department);
-//      try {
-//        for (Employee employee : employees) {
-//          employeeWEB.deleteOne(employee.getId());
-//        }
+      TypedQuery query = em.createQuery("DELETE FROM Employee e WHERE e.department = :department", Employee.class);
+      query.setParameter("department", department);
+      query.executeUpdate();
       em.remove(department);
-//      } catch (Exception ignored) {
-//      }
       return department;
     }
     return null;
