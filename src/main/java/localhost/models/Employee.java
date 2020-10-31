@@ -9,7 +9,15 @@ import java.util.HashMap;
 import java.util.Objects;
 
 @Entity
+@NamedQueries({
+  @NamedQuery(name = Employee.FIND_ALL, query = "SELECT e FROM Employee e"),
+  @NamedQuery(name = Employee.GET_BY_DEPARTMENT, query = "SELECT e FROM Employee e WHERE e.department = :department")
+})
 public class Employee {
+
+  public static final String GET_BY_DEPARTMENT = "Employee.GET_BY_DEPARTMENT";
+  public static final String FIND_ALL = "Employee.findAll";
+
   /**
    * entityId = START_WITH - allocationSize + INCREMENT_BY
    *

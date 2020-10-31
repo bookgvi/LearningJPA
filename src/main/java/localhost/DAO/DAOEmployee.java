@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -37,16 +38,13 @@ public class DAOEmployee {
     return newEmp;
   }
 
-  public List<Employee> findAll() {
-    TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e", Employee.class);
+  public List findAll() {
+    Query query = em.createNamedQuery(Employee.FIND_ALL);
     return query.getResultList();
   }
 
-  public List<Employee> findByDepartment(Department dep) {
-    TypedQuery<Employee> query = em.createQuery(
-      "SELECT e FROM Employee e WHERE e.department = :dep",
-      Employee.class
-    );
+  public List findByDepartment(Department dep) {
+    Query query = em.createNamedQuery(Employee.GET_BY_DEPARTMENT);
     query.setParameter("dep", dep);
     return query.getResultList();
   }

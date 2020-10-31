@@ -5,7 +5,11 @@ import javax.persistence.*;
 @Entity
 @IdClass(KeyForNews.class)
 @Access(value = AccessType.PROPERTY)
+@NamedQuery(name = News.FIND_ALL, query = "SELECT n FROM News n")
 public class News {
+
+  public static final String FIND_ALL = "News.findAll";
+
   @Id
   @Access(value = AccessType.FIELD)
   @SequenceGenerator(

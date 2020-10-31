@@ -7,8 +7,8 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.DELETE;
 import java.util.List;
 
 @Stateless
@@ -23,8 +23,8 @@ public class DAODepartment {
     return em.find(Department.class, id);
   }
 
-  public List<Department> findAll() {
-    TypedQuery<Department> query = em.createQuery("SELECT d from Department d", Department.class);
+  public List findAll() {
+    Query query = em.createNamedQuery(Department.FIND_ALL);
     return query.getResultList();
   }
 
@@ -63,7 +63,7 @@ public class DAODepartment {
     Department department = this.findOne(id);
     if (department != null) {
       // если не использовать orphanRemoval = true в анотации @OneToMany - нужно раскоментить код для "ручного кскадного удаления"
-      TypedQuery query = em.createQuery("DELETE FROM Employee e WHERE e.department = :department", Employee.class);
+      Query query = em.createNamedQuery(Employee.GET_BY_DEPARTMENT);
       query.setParameter("department", department);
       query.executeUpdate();
       em.remove(department);

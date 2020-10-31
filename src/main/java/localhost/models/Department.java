@@ -8,7 +8,11 @@ import java.util.Collection;
 import java.util.HashMap;
 
 @Entity
+@NamedQuery(name = Department.FIND_ALL, query = "SELECT d FROM Department d")
 public class Department {
+
+  public static final String FIND_ALL = "Department.findAll";
+
   @Id
   @NotNull
   @SequenceGenerator(name = "id_gen", sequenceName = "department_id_seq", allocationSize = 1)

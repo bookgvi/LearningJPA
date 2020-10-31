@@ -5,6 +5,7 @@ import localhost.models.News;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class DAONews {
     return news;
   }
 
-  public List<News> findAll() {
-    TypedQuery<News> query = em.createQuery("SELECT n FROM News n", News.class);
+  public List findAll() {
+    Query query = em.createNamedQuery(News.FIND_ALL);
     return query.getResultList();
   }
 }
