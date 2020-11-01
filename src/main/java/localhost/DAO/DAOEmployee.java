@@ -38,8 +38,8 @@ public class DAOEmployee {
     return newEmp;
   }
 
-  public List findAll() {
-    Query query = em.createNamedQuery(Employee.FIND_ALL);
+  public List<Employee> findAll() {
+    TypedQuery<Employee> query = em.createNamedQuery(Employee.FIND_ALL, Employee.class);
     return query.getResultList();
   }
 

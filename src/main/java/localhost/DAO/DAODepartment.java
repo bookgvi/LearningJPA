@@ -23,8 +23,8 @@ public class DAODepartment {
     return em.find(Department.class, id);
   }
 
-  public List findAll() {
-    Query query = em.createNamedQuery(Department.FIND_ALL);
+  public List<Department> findAll() {
+    TypedQuery<Department> query = em.createNamedQuery(Department.FIND_ALL, Department.class);
     return query.getResultList();
   }
 
