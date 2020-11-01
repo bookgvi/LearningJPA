@@ -23,12 +23,14 @@ public class ResourceEmployee {
 
   @GET
   @Consumes("application/json")
-  public Response getAll() {
+  public Response getAll(@QueryParam("by_dep") Integer by_dep) {
+    System.out.printf("by_dep: %s%n", by_dep == null);
     List<Employee> employeeList = emp.findAll();
-    ArrayList<HashMap<String, Object>> enployeeArr = new ArrayList<>();
-    for(Employee employee: employeeList) {
-      enployeeArr.add(employee.getMapForJson());
-    }
+    if (by_dep != null) employeeList = emp.findAll(by_dep);
+      ArrayList<HashMap<String, Object>> enployeeArr = new ArrayList<>();
+      for (Employee employee : employeeList) {
+        enployeeArr.add(employee.getMapForJson());
+      }
     return Response.ok().entity(enployeeArr).build();
   }
 
