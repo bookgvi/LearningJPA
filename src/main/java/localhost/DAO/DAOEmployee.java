@@ -45,12 +45,19 @@ public class DAOEmployee {
     TypedQuery<Employee> query = em.createNamedQuery(Employee.FIND_ALL, Employee.class);
     return query.getResultList();
   }
+
   public List<Employee> findAll(Integer by_dep) {
-    Department department = DAODepartment.findOne(by_dep);
     CriteriaBuilder builder = em.getCriteriaBuilder();
     CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
     Root<Employee> e = criteriaQuery.from(Employee.class);
-    criteriaQuery.select(e).where(builder.equal(e.get("department").as(Department.class), department));
+    criteriaQuery.select(e).where(
+      builder.equal(
+        e.get("department")
+          .get("id")
+          .as(Integer.class),
+        by_dep
+      )
+    );
     TypedQuery<Employee> query = em.createQuery(criteriaQuery);
     return query.getResultList();
   }
