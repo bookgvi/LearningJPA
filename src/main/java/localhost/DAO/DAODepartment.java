@@ -3,13 +3,17 @@ package localhost.DAO;
 import localhost.models.Department;
 import localhost.models.Employee;
 import localhost.services.ProvidersExceptions.NullPointer;
+import localhost.services.Validators.ValidatorsBean;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Stateless
@@ -20,11 +24,11 @@ public class DAODepartment {
   @EJB
   DAOEmployee DAOEmployee;
 
+  @Inject
+  ValidatorsBean validatorsBean;
+
   public Department findOne(int id) {
-    Department department = em.find(Department.class, id);
-    if (department == null)
-      throw new NullPointerException();
-    return department;
+    return em.find(Department.class, id);
   }
 
   public List<Department> findAll() {
@@ -40,11 +44,7 @@ public class DAODepartment {
     return department;
   }
 
-  public Department changeOne(int id, String name, String description) {
-    Department department = this.findOne(id);
-    assert name != null;
-    if (name.equals(""))
-      throw new IllegalArgumentException("Name could not be empty");
+  public Department changeOne(Department department, String name, String description) {
     department.setName(name);
     department.setDescription(description);
     return department;

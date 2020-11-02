@@ -2,9 +2,11 @@ package localhost.DAO;
 
 import localhost.models.Department;
 import localhost.models.Employee;
+import localhost.services.Validators.ValidatorsBean;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -12,7 +14,8 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.xml.ws.Response;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.io.Reader;
 import java.util.List;
 
@@ -24,14 +27,15 @@ public class DAOEmployee {
   @EJB
   DAODepartment DAODepartment;
 
+  @Inject
+  ValidatorsBean validatorsBean;
+
   public Employee findOne(long id) {
-    Employee employee = em.find(Employee.class, id);
-    return employee;
+    return em.find(Employee.class, id);
   }
 
-  public Employee createOne(String name, int salary, int depId) {
+  public Employee createOne(String name, int salary, int depId, Department department) {
     Employee newEmp = null;
-    Department department = this.DAODepartment.findOne(depId); // em.find(Department.class, depId);
     newEmp = new Employee();
     newEmp.setName(name);
     newEmp.setSalary(salary);

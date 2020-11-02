@@ -2,6 +2,8 @@ package localhost.resources;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import localhost.DAO.DAODepartment;
+import localhost.models.Department;
 import localhost.models.Employee;
 import localhost.DAO.DAOEmployee;
 import localhost.services.Validators.ValidatorsBean;
@@ -24,13 +26,15 @@ public class ResourceEmployee {
 
   @EJB
   DAOEmployee emp;
+  @EJB
+  DAODepartment dep;
+
   @Inject
   ValidatorsBean validatorsBean;
 
   @GET
   @Consumes("application/json")
   public Response getAll(@QueryParam("by_dep") Integer by_dep) {
-    System.out.printf("by_dep: %s%n", by_dep == null);
     List<Employee> employeeList = emp.findAll();
 
     // Есил переда фильтрующий параметр, то получим данные с его учетом
@@ -47,10 +51,9 @@ public class ResourceEmployee {
   @Path("{id}")
   @Consumes("application/json")
   public Response getOne(@PathParam("id") int id) {
+    validatorsBean.requireNonNul(id, "id не может быть пустым или равным 0");
     Employee employee = emp.findOne(id);
-    if (employee == null)
-      throw new WebApplicationException(Response.Status.NOT_FOUND);
-
+    validatorsBean.requireNonNul(employee, "Employee с таким id не существует");
     return Response.ok().entity(employee.getMapForJson()).build();
   }
 
@@ -59,15 +62,17 @@ public class ResourceEmployee {
   public Response createOne(InputStream payload) {
     String name = null;
     int salary = 0;
-    int department = 0;
+    int depId = 0;
     BufferedReader buffer = new BufferedReader(new InputStreamReader(payload));
     JsonObject jsonPayload = JsonParser.parseReader(buffer).getAsJsonObject();
     name = jsonPayload.get("name").getAsString();
     salary = jsonPayload.get("salary").getAsInt();
-    department = jsonPayload.get("department").getAsInt();
+    depId = jsonPayload.get("department").getAsInt();
 
-    validatorsBean.requireNonNul(name, "name");
-    localhost.models.Employee employee = emp.createOne(name, salary, department);
+    validatorsBean.requireNonNul(name, "name не может быть пустым");
+    Department department = dep.findOne(depId);
+    validatorsBean.requireNonNul(department, "Department с таким id несуществует");
+    localhost.models.Employee employee = emp.createOne(name, salary, depId, department);
 
     return Response.status(201).entity(employee.getMapForJson()).build();
   }
