@@ -50,7 +50,7 @@ public class ResourceDepartment {
   }
 
   @POST
-  @Consumes("application/json")
+  @Consumes("application/json; charset=utf-8")
   public Response createOne(InputStream inputStream) {
     BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream));
     JsonObject payloadJson = JsonParser.parseReader(buffer).getAsJsonObject();
@@ -59,9 +59,13 @@ public class ResourceDepartment {
       String description = payloadJson.get("description").getAsString();
       Department newDepartment = DAODepartment.createOne(name, description);
       if (newDepartment != null) return Response.status(201).entity(newDepartment.getMapForJson()).build();
-    } catch (Exception ignored) {
+    } catch (IllegalArgumentException ex) {
+      return Response
+        .ok()
+        .tag(ex.getMessage())
+        .build();
     }
-    return Response.status(400).build();
+    return Response.status(400).tag("Bad request").build();
   }
 
   @PUT
