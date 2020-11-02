@@ -9,10 +9,11 @@ import javax.ws.rs.ext.Provider;
 public class NullPointer implements ExceptionMapper<NullPointerException> {
   @Override
   public Response toResponse(NullPointerException e) {
+    String msg = e.getMessage() != null ? e.getMessage() : "Entity not found";
     return Response
       .status(Response.Status.BAD_REQUEST)
       .type(MediaType.TEXT_HTML)
-      .entity("Entity not found")
+      .entity(msg)
       .build();
 
   }

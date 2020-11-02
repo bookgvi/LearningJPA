@@ -12,6 +12,8 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.xml.ws.Response;
+import java.io.Reader;
 import java.util.List;
 
 @Stateless
@@ -23,21 +25,22 @@ public class DAOEmployee {
   DAODepartment DAODepartment;
 
   public Employee findOne(long id) {
-    return em.find(Employee.class, id);
+    Employee employee = em.find(Employee.class, id);
+    if (employee == null)
+      throw new NullPointerException("Entity not found");
+    return employee;
   }
 
   public Employee createOne(String name, int salary, int depId) {
     Employee newEmp = null;
     Department department = this.DAODepartment.findOne(depId); // em.find(Department.class, depId);
-    if (department != null) {
-      newEmp = new Employee();
-      newEmp.setName(name);
-      newEmp.setSalary(salary);
+    newEmp = new Employee();
+    newEmp.setName(name);
+    newEmp.setSalary(salary);
 //      newEmp.setDepId(department.getId()); // newEmp.setDepId(depId);
-      newEmp.setDepartment(department);
-      DAODepartment.addEmployee(depId, newEmp);
-      em.persist(newEmp);
-    }
+    newEmp.setDepartment(department);
+    DAODepartment.addEmployee(depId, newEmp);
+    em.persist(newEmp);
     return newEmp;
   }
 

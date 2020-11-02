@@ -1,6 +1,7 @@
 package localhost.models;
 
 import com.google.gson.Gson;
+import localhost.services.Validators.ListenerNotNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -13,6 +14,7 @@ import java.util.Objects;
   @NamedQuery(name = Employee.FIND_ALL, query = "SELECT e FROM Employee e"),
   @NamedQuery(name = Employee.GET_BY_DEPARTMENT, query = "SELECT e FROM Employee e WHERE e.department = :department")
 })
+@EntityListeners({ ListenerNotNull.class })
 public class Employee {
 
   public static final String GET_BY_DEPARTMENT = "Employee.GET_BY_DEPARTMENT";
@@ -40,7 +42,6 @@ public class Employee {
   )
   @GeneratedValue(generator = "employee_id", strategy = GenerationType.SEQUENCE)
   private long id;
-  @NotNull
   private String name;
   @Min(0)
   private int salary;
@@ -95,6 +96,7 @@ public class Employee {
   public Department getDepartment() {
     return this.department;
   }
+
   public void setDepartment(Department department) {
     this.department = department;
   }
@@ -119,9 +121,9 @@ public class Employee {
   public String toString() {
     return
       "\n id: " + this.id +
-      "\n name: " + this.name +
-      "\n salary: " + this.salary +
-      "\n department: {" + this.department.toString() + "} \n";
+        "\n name: " + this.name +
+        "\n salary: " + this.salary +
+        "\n department: {" + this.department.toString() + "} \n";
   }
 
   @Override

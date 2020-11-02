@@ -26,7 +26,7 @@ public class ResourceEmployee {
   public Response getAll(@QueryParam("by_dep") Integer by_dep) {
     System.out.printf("by_dep: %s%n", by_dep == null);
     List<Employee> employeeList = emp.findAll();
-    
+
     // Есил переда фильтрующий параметр, то получим данные с его учетом
     if (by_dep != null) employeeList = emp.findAll(by_dep);
 
@@ -42,33 +42,22 @@ public class ResourceEmployee {
   @Consumes("application/json")
   public Response getOne(@PathParam("id") int id) {
     Employee employee = emp.findOne(id);
-    if (employee != null) {
-      return Response.ok().entity(employee.getMapForJson()).build();
-    }
-    return Response.status(400).build();
+    return Response.ok().entity(employee.getMapForJson()).build();
   }
 
   @POST
   @Consumes("application/json")
-  public Response createOne(
-    InputStream payload
-  ) {
+  public Response createOne(InputStream payload) {
     String name = null;
     int salary = 0;
     int department = 0;
-    try {
-      BufferedReader buffer = new BufferedReader(new InputStreamReader(payload));
-      JsonObject jsonPayload = JsonParser.parseReader(buffer).getAsJsonObject();
-      name = jsonPayload.get("name").getAsString();
-      salary = jsonPayload.get("salary").getAsInt();
-      department = jsonPayload.get("department").getAsInt();
-    } catch (Exception ignored) {
-    }
+    BufferedReader buffer = new BufferedReader(new InputStreamReader(payload));
+    JsonObject jsonPayload = JsonParser.parseReader(buffer).getAsJsonObject();
+    name = jsonPayload.get("name").getAsString();
+    salary = jsonPayload.get("salary").getAsInt();
+    department = jsonPayload.get("department").getAsInt();
     localhost.models.Employee employee = emp.createOne(name, salary, department);
 
-    if (employee != null) {
-      return Response.status(201).entity(employee.getMapForJson()).build();
-    }
-    return Response.status(400).build(); // Bad request
+    return Response.status(201).entity(employee.getMapForJson()).build();
   }
 }
