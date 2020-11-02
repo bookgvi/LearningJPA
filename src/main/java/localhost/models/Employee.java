@@ -42,6 +42,7 @@ public class Employee {
   )
   @GeneratedValue(generator = "employee_id", strategy = GenerationType.SEQUENCE)
   private long id;
+  @NotNull
   private String name;
   @Min(0)
   private int salary;
