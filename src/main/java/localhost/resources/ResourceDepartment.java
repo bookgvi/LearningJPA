@@ -47,7 +47,7 @@ public class ResourceDepartment {
   }
 
   @POST
-  @Consumes("application/json; charset=utf-8")
+  @Consumes("application/json")
   public Response createOne(InputStream inputStream) {
     BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream));
     JsonObject payloadJson = JsonParser.parseReader(buffer).getAsJsonObject();

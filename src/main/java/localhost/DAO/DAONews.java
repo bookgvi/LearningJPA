@@ -23,8 +23,8 @@ public class DAONews {
     return news;
   }
 
-  public List findAll() {
-    Query query = em.createNamedQuery(News.FIND_ALL);
+  public List<News> findAll() {
+    TypedQuery<News> query = em.createNamedQuery(News.FIND_ALL, News.class);
     return query.getResultList();
   }
 }

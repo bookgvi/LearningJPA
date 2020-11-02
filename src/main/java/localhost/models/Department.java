@@ -77,18 +77,13 @@ public class Department {
 
   private void validateName() {
     if (this.name == null || this.name.equals(""))
-      throw new IllegalArgumentException("Name can not be null");
+      throw new IllegalArgumentException("Name can not be null!");
   }
 
   @PrePersist
   @PreUpdate
   public void validate() {
     this.validateName();
-  }
-
-  @PostLoad // Callback Hook for EntityManager#find
-  public void getEntity() {
-    System.out.print(this.toString());
   }
 
   @Override
