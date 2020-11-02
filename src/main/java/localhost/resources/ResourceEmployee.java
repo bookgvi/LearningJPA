@@ -4,8 +4,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import localhost.models.Employee;
 import localhost.DAO.DAOEmployee;
+import localhost.services.Validators.ValidatorsBean;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.BufferedReader;
@@ -16,10 +19,13 @@ import java.util.HashMap;
 import java.util.List;
 
 @Path("/employee")
+@RequestScoped
 public class ResourceEmployee {
 
   @EJB
   DAOEmployee emp;
+  @Inject
+  ValidatorsBean validatorsBean;
 
   @GET
   @Consumes("application/json")
@@ -42,6 +48,9 @@ public class ResourceEmployee {
   @Consumes("application/json")
   public Response getOne(@PathParam("id") int id) {
     Employee employee = emp.findOne(id);
+    if (employee == null)
+      throw new WebApplicationException(Response.Status.NOT_FOUND);
+
     return Response.ok().entity(employee.getMapForJson()).build();
   }
 
@@ -56,6 +65,8 @@ public class ResourceEmployee {
     name = jsonPayload.get("name").getAsString();
     salary = jsonPayload.get("salary").getAsInt();
     department = jsonPayload.get("department").getAsInt();
+
+    validatorsBean.requireNonNul(name, "name");
     localhost.models.Employee employee = emp.createOne(name, salary, department);
 
     return Response.status(201).entity(employee.getMapForJson()).build();

@@ -26,8 +26,6 @@ public class DAOEmployee {
 
   public Employee findOne(long id) {
     Employee employee = em.find(Employee.class, id);
-    if (employee == null)
-      throw new NullPointerException("Entity not found");
     return employee;
   }
 
