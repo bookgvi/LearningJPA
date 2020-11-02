@@ -42,6 +42,9 @@ public class DAODepartment {
 
   public Department changeOne(int id, String name, String description) {
     Department department = this.findOne(id);
+    assert name != null;
+    if (name.equals(""))
+      throw new IllegalArgumentException("Name could not be empty");
     department.setName(name);
     department.setDescription(description);
     return department;

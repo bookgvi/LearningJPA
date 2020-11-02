@@ -6,16 +6,10 @@ import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 
 @Provider
-@PreMatching
-public class FilterDepartment implements ContainerResponseFilter, ContainerRequestFilter {
-  @Override
-  public void filter(ContainerRequestContext containerRequestContext) throws IOException {
-    System.out.printf("FILTER Request: %s%n", containerRequestContext);
-
-  }
-
+public class FilterDepartment implements ContainerResponseFilter {
   @Override
   public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext responseContext) throws IOException {
+    System.out.printf("QQQ: %s%n", containerRequestContext);
     Object entity = responseContext.getEntity();
     if (entity instanceof Throwable) {
       responseContext.setEntity(null);
