@@ -75,6 +75,11 @@ public class Department {
     return gson.toJson(departmentMap);
   }
 
+  @PostLoad // Callback Hook for EntityManager#find
+  public void getEntity() {
+    System.out.print(this.toString());
+  }
+
   @Override
   public String toString() {
     return
