@@ -59,13 +59,10 @@ public class ResourceDepartment {
       String description = payloadJson.get("description").getAsString();
       Department newDepartment = DAODepartment.createOne(name, description);
       if (newDepartment != null) return Response.status(201).entity(newDepartment.getMapForJson()).build();
-    } catch (IllegalArgumentException ex) {
-      return Response
-        .ok()
-        .tag(ex.getMessage())
-        .build();
+    } catch (IllegalArgumentException ignored) {
     }
     return Response.status(400).tag("Bad request").build();
+
   }
 
   @PUT
