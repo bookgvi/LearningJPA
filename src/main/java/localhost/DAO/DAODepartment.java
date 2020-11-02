@@ -2,6 +2,7 @@ package localhost.DAO;
 
 import localhost.models.Department;
 import localhost.models.Employee;
+import localhost.services.ProvidersExceptions.NullPointer;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -20,7 +21,10 @@ public class DAODepartment {
   DAOEmployee DAOEmployee;
 
   public Department findOne(int id) {
-    return em.find(Department.class, id);
+    Department department = em.find(Department.class, id);
+    if (department == null)
+      throw new NullPointerException();
+    return department;
   }
 
   public List<Department> findAll() {
@@ -38,37 +42,30 @@ public class DAODepartment {
 
   public Department changeOne(int id, String name, String description) {
     Department department = this.findOne(id);
-    if (department != null) {
-      department.setName(name);
-      department.setDescription(description);
-    }
+    department.setName(name);
+    department.setDescription(description);
     return department;
   }
+
   public Department addEmployees(int id, List<Employee> employees) {
     Department department = this.findOne(id);
-    if (department != null) {
-      department.setEmployees(employees);
-    }
+    department.setEmployees(employees);
     return department;
   }
+
   public Department addEmployee(int id, Employee employee) {
     Department department = this.findOne(id);
-    if (department != null) {
-      department.addEmployee(employee);
-    }
+    department.addEmployee(employee);
     return department;
   }
 
   public Department deleteOne(int id) {
     Department department = this.findOne(id);
-    if (department != null) {
-      // если не использовать orphanRemoval = true в анотации @OneToMany - нужно раскоментить код для "ручного кскадного удаления"
-      Query query = em.createNamedQuery(Employee.GET_BY_DEPARTMENT);
-      query.setParameter("department", department);
-      query.executeUpdate();
-      em.remove(department);
-      return department;
-    }
-    return null;
+    // если не использовать orphanRemoval = true в анотации @OneToMany - нужно раскоментить код для "ручного кскадного удаления"
+    Query query = em.createNamedQuery(Employee.GET_BY_DEPARTMENT);
+    query.setParameter("department", department);
+    query.executeUpdate();
+    em.remove(department);
+    return department;
   }
 }
