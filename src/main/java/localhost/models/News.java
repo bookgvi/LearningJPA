@@ -1,6 +1,7 @@
 package localhost.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @IdClass(KeyForNews.class)
@@ -24,6 +25,7 @@ public class News {
   private int id;
   private String lang;
 
+  @NotNull
   private String title;
   private int dateStamp;
 
